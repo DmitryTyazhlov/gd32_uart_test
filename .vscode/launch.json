@@ -19,6 +19,9 @@
 //         "serialNumber": "", //If you have more than one J-Link probe, add the serial number here.
 //         "runToEntryPoint": "main",
 //         "svdFile": "${workspaceRoot}/jlink/GD32F3x0.svd",
+//         "preLaunchCommands": [
+//           "make",
+//         ]   
 //       }
 //       ]
 //     }
@@ -37,7 +40,9 @@
             "interface": "swd",
             "gdbTarget": "localhost:2331",
             "armToolchainPath": "/Applications/ARM/bin/",
-            "showDevDebugOutput": "raw" 
+            "preLaunchCommands": [
+              "make",
+            ]   
         }
       ]
     }
