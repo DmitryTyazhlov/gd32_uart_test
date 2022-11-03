@@ -3,9 +3,12 @@
 #include "gd32f3x0_usart.h"               
 #include <stdint.h>
 
-uint8_t rec_buf[32] = {0};
 void uart_init(void);
 void receive_uart(void);
+void transmit_uart(uint8_t *buf, uint8_t size);
+
+uint8_t rec_buf[32] = {0};
+uint8_t transmit_buf[] = {0x55, 0x32, 0x04, 0x35, 0x61};
 
 int main(){
 
@@ -21,13 +24,26 @@ int main(){
     uart_init();
 
 	while(1){
-		receive_uart();
+		//receive_uart();
+        for(uint32_t x = 0; x < 15000000; x++);
+        transmit_uart (transmit_buf, sizeof(transmit_buf));
 	}
+}
+
+void transmit_uart (uint8_t *buf, uint8_t size){
+    gpio_bit_set(GPIOA, GPIO_PIN_4);
+    for (uint8_t x = 0; x < size; x++){
+        while(RESET == usart_flag_get(USART1, USART_FLAG_TBE));
+        usart_data_transmit (USART1, *(buf + x));          
+    }
+    while(RESET == usart_flag_get(USART1, USART_FLAG_TC));
+    gpio_bit_reset(GPIOA, GPIO_PIN_4);
 }
 
 void receive_uart(void){
 	static uint32_t x = 0;
-    while(RESET == usart_flag_get(USART1, USART_FLAG_RBNE));
+    while(RESET == usart_flag_get(USART1, USART_FLAG_RBNE)){
+    }
 	rec_buf[x] = usart_data_receive(USART1);
 	x++;
     if (x == 32) x = 0;
