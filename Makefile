@@ -193,9 +193,9 @@ erase:
 	JLinkExe -Device GD32F330K8 -If SWD -Speed 1000 jlink/EraseMCU.jlink
 r_flash:
 	make
-	JLinkExe ip tunnel:801031640:thirteen:jlink-europe.segger.com -Device GD32F330K8 -If SWD -Speed 1000 jlink/FlashMCU.jlink
+	JLinkExe ip tunnel:801031640::jlink-europe.segger.com -Device GD32F330K8 -If SWD -Speed 1000 jlink/FlashMCU.jlink
 r_erase:
-	JLinkExe ip tunnel:801031640:thirteen:jlink-europe.segger.com -Device GD32F330K8 -If SWD -Speed 1000 jlink/EraseMCU.jlink
+	JLinkExe ip tunnel:801031640::jlink-europe.segger.com -Device GD32F330K8 -If SWD -Speed 1000 jlink/EraseMCU.jlink
 #######################################
 # dependencies
 #######################################
